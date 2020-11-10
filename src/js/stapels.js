@@ -48,7 +48,7 @@ export class abstractStapel extends Phaser.GameObjects.Zone {
 	}
 }
 
-export class AflegStapel extends abstractStapel {
+export class TrekStapel extends abstractStapel {
 	constructor (scene, x, y, width, height) {
 		super(scene, x, y, width, height);
 
@@ -56,19 +56,14 @@ export class AflegStapel extends abstractStapel {
 		// This makes it resizable
 		this.setInteractive(undefined, undefined, true);
 
-		this.border = scene.add.rectangle(this.x, this.y, this.width, this.height).setFillStyle().setStrokeStyle(5, 0xff0000, 1);
-
 		this.setOrigin(0.5, 0.0);
-		this.border.setOrigin(0.5, 0.0);
-
-		this.border.setStrokeStyle(5, colorStapelBorderIdle, 1);
 	}
 
 	addCard (card) {
 		if (this.getSize() !== 0) {
 			this.cards[this.getSize() - 1].disableInteractive().close();
 			// this.setPosition(this.x, this.y);
-			this.setSize(this.width, this.height + 20, true);
+			this.setSize(this.width, this.height - 1, true);
 			// this.setDisplaySize(this.width, this.height + 20); // Zones aren't rendered
 		} else {
 			// this.setPosition(this.x, this.y);
@@ -77,21 +72,18 @@ export class AflegStapel extends abstractStapel {
 		}
 
 		// this.border.setPosition(this.x, this.y);
-		resizeRect(this.border, this.width, this.height);
-
+		card.disableInteractive().close();
 		super.addCard(card);
 
 		card.x = (this.x);
-		card.y = (this.y + card.height / 2 + this.getSize() * 20 - 5);
-
-		this.border.setStrokeStyle(5, colorStapelBorderIdle, 1);
+		card.y = (this.y + card.height / 2 + this.getSize() * -1 - 5);
 	}
 
 	popCard () {
 		if (this.getSize() >= 2) {
 			this.cards[this.getSize() - 2].setInteractive().open();
 			// this.setPosition(this.x, this.y);
-			this.setSize(this.width, this.height - 20, true);
+			this.setSize(this.width, this.height - 1, true);
 			// this.setDisplaySize(this.width, this.height - 20); // Zones aren't rendered
 		} else {
 			// this.setPosition(this.x, this.y);
@@ -100,18 +92,57 @@ export class AflegStapel extends abstractStapel {
 		}
 
 		// this.border.setPosition(this.x, this.y);
-		resizeRect(this.border, this.width, this.height);
 		return super.popCard();
 	}
+}
+export class TrekStapel2 extends abstractStapel {
+	constructor (scene, x, y, width, height) {
+		super(scene, x, y, width, height);
 
-	dragEnter (card) {
-		if (!this.containsCard(card)) {
-			this.border.setStrokeStyle(5, colorStapelBorderHover, 1);
-		}
+		// Make this a dropzone with default shape without a callback
+		// This makes it resizable
+		this.setInteractive(undefined, undefined, true);
+		this.text = scene.add.text(x, y, '5', { font: '45px Arial', fill: '#ffffff' });
+		this.text.setOrigin(0.5, 0.5);
+		scene.children.bringToTop(this.text);
+		this.setOrigin(0.5, 0.0);
 	}
 
-	dragLeave (card) {
-		this.border.setStrokeStyle(5, colorStapelBorderIdle, 1);
+	addCard (card) {
+		if (this.getSize() !== 0) {
+			this.cards[this.getSize() - 1].disableInteractive().close();
+			// this.setPosition(this.x, this.y);
+			this.setSize(this.width, this.height, true);
+			// this.setDisplaySize(this.width, this.height + 20); // Zones aren't rendered
+		} else {
+			// this.setPosition(this.x, this.y);
+			this.setSize(this.width, this.height, true);
+			// this.setDisplaySize(this.width, this.height); // Zones aren't rendered
+		}
+
+		// this.border.setPosition(this.x, this.y);
+		card.disableInteractive().close();
+		super.addCard(card);
+		this.scene.children.bringToTop(this.text);
+		this.text.setText(this.getSize());
+		card.x = (this.x);
+		card.y = (this.y);
+	}
+
+	popCard () {
+		if (this.getSize() >= 2) {
+			this.cards[this.getSize() - 2].setInteractive().open();
+			// this.setPosition(this.x, this.y);
+			this.setSize(this.width, this.height - 0, true);
+			// this.setDisplaySize(this.width, this.height - 20); // Zones aren't rendered
+		} else {
+			// this.setPosition(this.x, this.y);
+			this.setSize(this.width, this.height, true);
+			// this.setDisplaySize(this.width, this.height); // Zones aren't rendered
+		}
+
+		// this.border.setPosition(this.x, this.y);
+		return super.popCard();
 	}
 }
 

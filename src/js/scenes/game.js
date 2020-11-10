@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { Card } from '../card';
-import { AflegStapel } from '../stapels';
+import { TrekStapel, TrekStapel2 } from '../stapels';
 import { style } from '../style';
 
 export default class Game extends Phaser.Scene {
@@ -17,17 +17,57 @@ export default class Game extends Phaser.Scene {
 	create () {
 		const self = this;
 
-		this.stapel1 = new AflegStapel(this, 300, 200, 150, 220);
-		this.stapel2 = new AflegStapel(this, 500, 200, 150, 220);
-		this.stapel3 = new AflegStapel(this, 700, 200, 150, 220);
+		this.stapel1 = new TrekStapel(this, 300, 100, 150, 220);
+		this.stapel2 = new TrekStapel(this, 500, 100, 150, 220);
+		this.stapel3 = new TrekStapel(this, 700, 100, 150, 220);
+		this.stapel11 = new TrekStapel2(this, 300, 500, 150, 220);
+		this.stapel12 = new TrekStapel2(this, 500, 500, 150, 220);
+		this.stapel13 = new TrekStapel2(this, 700, 500, 150, 220);
 
 		/*
 		 * Deal cards button
 		 */
 
 		this.dealCards = () => {
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < 10; i++) {
 				this.stapel1.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel11.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel2.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel12.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel3.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel13.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+			}
+			for (let i = 0; i < 10; i++) {
+				this.stapel2.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel12.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel3.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel13.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+			}
+			for (let i = 0; i < 10; i++) {
+				this.stapel3.addCard(
+					new Card(this, 0, 0, i + 1, 'C'),
+				);
+				this.stapel13.addCard(
 					new Card(this, 0, 0, i + 1, 'C'),
 				);
 			}
