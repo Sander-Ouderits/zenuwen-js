@@ -35,6 +35,12 @@ export default class Game extends Phaser.Scene {
 			}
 		}
 
+		this.time.addEvent({ delay: 200, callback: updateTest, callbackScope: this, loop: true });
+		var counter = 0;
+		function updateTest () {
+			console.log(counter);
+			counter = counter + 1;
+		}
 		// Shuffle the trekstapel
 		trekStapels[0].shuffle();
 
